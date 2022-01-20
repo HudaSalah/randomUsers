@@ -1,0 +1,52 @@
+<main>
+  <section id="randomUser">
+    <div class="container">
+      <!-- exports buttons  -->
+      <div class="d-flex justify-content-end my-3">
+        <button type="button" class="btn btn-blue p-3 m-2">
+          Export CSV <i class="fa fa-file"></i>
+        </button>
+        <button type="button" class="btn btn-blue p-3 m-2">
+          Export XML <i class="fa fa-file"></i>
+        </button>
+      </div>
+
+      <!-- random users list container  -->
+      <div class="randomUser-filter my-5">
+        <div class="col-12 d-flex align-items-center">
+          <span class="mx-2"><i class="fa fa-filter"></i></span>
+          <div class="row col-lg-10 col-12">
+            <div class="col-12 col-md-4 d-flex align-items-center my-2">
+              <label class="px-3">Gender:</label>
+              <ng-select
+                class="form-control w-100 p-0 border-0 h-auto"
+                [items]="genderData"
+                bindLabel="name"
+                bindValue="id"
+                [placeholder]="'select gender'"
+                [allowClear]="true"
+                [(ngModel)]="selectedGender"
+              >
+              </ng-select>
+            </div>
+
+            <div class="col-12 col-md-6 d-flex align-items-center my-2">
+              <label class="px-3">Nationality:</label>
+              <ng-select
+                class="form-control w-100 p-0 border-0 h-auto"
+                [items]="nationalityData"
+                bindLabel="name"
+                bindValue="id"
+                [multiple]="true"
+                [placeholder]="'select nationality'"
+                [allowClear]="true"
+                [(ngModel)]="selectedNat"
+              >
+              </ng-select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
