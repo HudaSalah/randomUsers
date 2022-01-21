@@ -10,6 +10,7 @@ import { Router, UrlSerializer } from '@angular/router';
   styleUrls: ['./random-user-list.component.scss'],
 })
 export class RandomUserListComponent implements OnInit {
+  isloading = true ;
   genderData = [
     {
       id: 'male',
@@ -97,6 +98,7 @@ export class RandomUserListComponent implements OnInit {
   }
 
   getRandomUsersList() {
+    this.isloading = true ;
     let params = this.createParams();
     this.ApiService.get(params).subscribe(
       (res) => {
@@ -104,6 +106,7 @@ export class RandomUserListComponent implements OnInit {
         let result = res as RandomUsers;
         this.randomUsersList = result.results as RandomUser[];
         console.log(this.randomUsersList);
+        this.isloading = false;
       },
       (err) => {
         // this.ApiService.redirectToNotFound();

@@ -9,13 +9,15 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { RandomUserListComponent } from './components/random-user-list/random-user-list.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    RandomUserListComponent
+    RandomUserListComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
