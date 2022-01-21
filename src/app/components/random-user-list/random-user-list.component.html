@@ -39,7 +39,7 @@
                 bindLabel="name"
                 bindValue="id"
                 [multiple]="true"
-                maxSelectedItems = 3
+                maxSelectedItems="3"
                 [placeholder]="'select nationality'"
                 [allowClear]="true"
                 [(ngModel)]="selectedNat"
@@ -52,28 +52,96 @@
       </div>
 
       <!-- show random users list  -->
-      <div class="randomUser-list-container row col-12">
-        <div class="col-12 col-md-6 col-lg-4 mt-3 mb-5">
-           <div class="randomUser-card d-flex justify-content-center">
-             <div class="randomUser-img" style="background-image: url(assets/images/huda.jpg);">
-             </div>
-             <div class="randomUser-information row col-12">
-               <div class="col-12 col-md-6">
-                 <label>name:</label><label>HuDa slah el dien</label>
-               </div>
-               <div class="col-12 col-md-6">
-                <label>name:</label><label>HuDa slah el dien</label>
+      <div
+        class="randomUser-list-container row col-12"
+        *ngIf="randomUsersList.length > 0"
+      >
+        <div
+          *ngFor="let user of randomUsersList"
+          class="col-12 col-md-6 col-lg-4 mt-3 mb-5"
+        >
+          <div class="randomUser-card d-flex justify-content-center">
+            <div
+              class="randomUser-img"
+              style="background-image: url({{ user.picture.large }});"
+            ></div>
+            <div class="randomUser-information row col-12">
+              <div *ngIf="user.name" class="d-flex col-12 col-md-6">
+                <label><i class="fa fa-user"></i></label>
+                <label>{{ user.name.first }} {{ user.name.last }}</label>
               </div>
-              <div class="col-12 col-md-6">
-                <label>name:</label><label>HuDa slah el dien</label>
-              </div>
-              <div class="col-12 col-md-6">
-                <label>name:</label><label>HuDa slah el dien</label>
-              </div>
-             </div>
-           </div>
-        </div>
 
+              <div *ngIf="user.email" class="d-flex col-12 col-md-6">
+                <label><i class="fa fa-envelope"></i></label>
+                <label title="{{ user.email }}">{{ user.email }}</label>
+              </div>
+
+              <div *ngIf="user.gender" class="d-flex col-12 col-md-6">
+                <label><i class="fa fa-venus-mars"></i></label>
+                <label>{{ user.gender }}</label>
+              </div>
+
+              <div *ngIf="user.phone" class="d-flex col-12 col-md-6">
+                <label><i class="fa fa-phone"></i></label>
+                <label>{{ user.phone }}</label>
+              </div>
+
+              <div *ngIf="user.nat" class="d-flex col-12 col-md-6">
+                <label><i class="fa fa-globe"></i></label>
+                <label>{{ user.nat }}</label>
+              </div>
+
+              <div *ngIf="user.location" class="d-flex col-12 col-md-6">
+                <label><i class="fa fa-map-marker"></i></label>
+                <label
+                  title="{{ user.location.country }} / {{ user.location.city }}"
+                  >{{ user.location.country }} / {{ user.location.city }}</label
+                >
+              </div>
+
+              <div *ngIf="user.dob" class="d-flex col-12 col-md-6">
+                <label><i class="fa fa-calendar"></i></label>
+                <label title="current age">{{ user.dob.age }}</label>
+              </div>
+
+              <div *ngIf="user.registered" class="d-flex col-12 col-md-6">
+                <label><i class="fa fa-calendar"></i></label>
+                <label title="registered seniority">{{
+                  user.registered.age
+                }}</label>
+              </div>
+
+              <!-- <div *ngFor="let item of user | keyvalue" class="col-12 col-md-6">
+                <div *ngIf="item.key == 'name'">
+                  <label
+                    >{{ item.key }}:{{ item.value.first }}
+                    {{ item.value.last }}</label
+                  >
+                </div>
+                <div *ngIf="item.key == 'email'">
+                  <label>{{ item.key }}:{{ item.value }}</label>
+                </div>
+                <div *ngIf="item.key == 'gender'">
+                  <label>{{ item.key }}:{{ item.value }}</label>
+                </div>
+                <div *ngIf="item.key == 'phone'">
+                  <label>{{ item.key }}:{{ item.value }}</label>
+                </div>
+                <div *ngIf="item.key == 'nat'">
+                  <label>nationality:{{ item.value }}</label>
+                </div>
+                <div *ngIf="item.key == 'location'">
+                  <label
+                    >{{ item.key }}:{{ item.value.country }}
+                    {{ item.value.city }}</label>
+                </div>
+                <div *ngIf="item.key == 'registered'">
+                  <label>{{ item.key }}:{{ item.value.age }}</label>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>

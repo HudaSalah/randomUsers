@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ApiService } from 'src/app/services/api.service';
+import { RandomUsers } from 'src/app/models/random-users';
+import { RandomUser } from 'src/app/models/random-user';
 @Component({
   selector: 'app-random-user-list',
   templateUrl: './random-user-list.component.html',
@@ -37,8 +39,8 @@ export class RandomUserListComponent implements OnInit {
   ];
   nationalityData: Array<object> = [];
   selectedNat: string[];
-
-  constructor() {
+  randomUsersList: RandomUser[] = [];
+  constructor(private ApiService: ApiService) {
     this.nationalities.forEach((nat, index) => {
       this.nationalityData.push({
         id: nat,
@@ -47,13 +49,31 @@ export class RandomUserListComponent implements OnInit {
     });
   }
 
-  onNationalityChange(event){
-    console.log(event)
-    console.log(this.selectedNat)
+  onNationalityChange(event) {
+    console.log(event);
+    console.log(this.selectedNat);
   }
-  onGenderChange(event){
-    console.log(event)
-    console.log(this.selectedGender)
+  onGenderChange(event) {
+    console.log(event);
+    console.log(this.selectedGender);
   }
-  ngOnInit(): void {}
+
+  getRandomUsersList(gender?, nationality?) {
+    this.ApiService.get(
+      `?results=9&gender=${gender}&nat=${nationality}`
+    ).subscribe(
+      (res) => {
+        console.log(res);
+        let result = res as RandomUsers;
+        this.randomUsersList = result.results as RandomUser[];
+        console.log(this.randomUsersList);
+      },
+      (err) => {
+        // this.ApiService.redirectToNotFound();
+      }
+    );
+  }
+  ngOnInit(): void {
+    this.getRandomUsersList();
+  }
 }

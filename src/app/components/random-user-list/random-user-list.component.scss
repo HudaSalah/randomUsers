@@ -38,11 +38,29 @@
         top: -25%;
         background-size: cover;
         background-position: center;
+        @media #{$information-MobileMedium} {
+          width: 110px;
+          height: 110px;
+        }
       }
       .randomUser-information {
         margin-top: 20%;
-        label{
+        @media #{$information-laptop} {
+          margin-top: 25%;
+        }
+        @media #{$information-MobileLarge} {
+          margin-top: 20%;
+        }
+        label {
           font-size: 12px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          word-break: break-word;
+          i {
+            width: 20px;
+            color: $color-yellow;
+          }
         }
       }
     }
