@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { RandomUsers } from 'src/app/models/random-users';
 import { RandomUser } from 'src/app/models/random-user';
+import { DOCUMENT } from '@angular/common';
+import { HttpParams } from '@angular/common/http';
 @Component({
   selector: 'app-random-user-list',
   templateUrl: './random-user-list.component.html',
@@ -40,13 +42,35 @@ export class RandomUserListComponent implements OnInit {
   nationalityData: Array<object> = [];
   selectedNat: string[];
   randomUsersList: RandomUser[] = [];
-  constructor(private ApiService: ApiService) {
+  constructor(private ApiService: ApiService,@Inject(DOCUMENT) private document: Document) {
     this.nationalities.forEach((nat, index) => {
       this.nationalityData.push({
         id: nat,
         name: nat,
       });
     });
+  }
+
+  createDownloadLink(data: any) {
+    let url = window.URL.createObjectURL(data);
+    let a = this.document.createElement('a');
+    a.href = url;
+    a.download = 'randomUsersData';
+    this.document.body.appendChild(a);
+    a.click();
+    this.document.body.removeChild(a);
+  }
+
+  exportFile(type){
+    this.ApiService.downloadFile(`?results=9&format=${type}`
+    ).subscribe(
+      (res) => {
+        this.createDownloadLink(res);
+      },
+      (err) => {
+        // this.ApiService.redirectToNotFound();
+      }
+    );
   }
 
   onNationalityChange(event) {
@@ -73,6 +97,7 @@ export class RandomUserListComponent implements OnInit {
       }
     );
   }
+
   ngOnInit(): void {
     this.getRandomUsersList();
   }

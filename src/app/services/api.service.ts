@@ -24,6 +24,10 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/${path}`);
   }
 
+  downloadFile(path: string): Observable<any>{
+		return this.http.get(`${this.apiUrl}/${path}`, {responseType: 'blob'});
+   }
+
   redirectToNotFound() {
     this.router.navigate(['/404']);
   }

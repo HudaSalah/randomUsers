@@ -3,10 +3,10 @@
     <div class="container">
       <!-- exports buttons  -->
       <div class="d-flex justify-content-end my-3">
-        <button type="button" class="btn btn-blue p-3 m-2">
+        <button type="button" class="btn btn-blue p-3 m-2" (click)="exportFile('CSV')">
           Export CSV <i class="fa fa-file"></i>
         </button>
-        <button type="button" class="btn btn-blue p-3 m-2">
+        <button type="button" class="btn btn-blue p-3 m-2" (click)="exportFile('XML')">
           Export XML <i class="fa fa-file"></i>
         </button>
       </div>
