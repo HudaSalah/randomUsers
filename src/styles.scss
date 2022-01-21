@@ -13,10 +13,8 @@
 
 // main colors
 $color-yellow: #ffc107;
-$color-pink: #f1125b;
-$color-light-pink: #f77ea6;
+$color-orange: #ea604d;
 $color-blue: #52b2ad;
-$color-light-blue: #76baff;
 $color-petroleum: #172c3d;
 $color-dark-petroleum: #11202e;
 $color-gray: #f9f9f9;
@@ -139,8 +137,8 @@ main {
 .btn-blue {
   @include btn($color-blue);
 }
-.btn-pink {
-  @include btn($color-pink);
+.btn-orange {
+  @include btn($color-orange);
 }
 .btn-yellow {
   @include btn($color-yellow);

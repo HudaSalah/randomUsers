@@ -51,19 +51,23 @@
         </div>
       </div>
 
-      <!-- show random users list  -->
+      <!-- show random users list if exist -->
       <div
-        class="randomUser-list-container row col-12"
-        *ngIf="randomUsersList.length > 0"
+        class="randomUser-list-container row col-12 my-5 py-5"
+        *ngIf="randomUsersList.length > 0; else randomUsersEmpty"
       >
         <div
-          *ngFor="let user of randomUsersList"
+          *ngFor="let user of randomUsersList; let even = even"
           class="col-12 col-md-6 col-lg-4 mt-3 mb-5"
         >
-          <div class="randomUser-card d-flex justify-content-center">
+          <div
+            class="randomUser-card d-flex justify-content-center"
+            [ngStyle]="{ 'border-color': even ? '#ea604d' : ' #1db57b' }"
+          >
             <div
               class="randomUser-img"
               style="background-image: url({{ user.picture.large }});"
+              [ngStyle]="{ 'border-color': even ? '#ea604d' : ' #1db57b' }"
             ></div>
             <div class="randomUser-information row col-12">
               <div *ngIf="user.name" class="d-flex col-12 col-md-6">
@@ -143,6 +147,13 @@
           </div>
         </div>
       </div>
+
+      <!-- show msg if random users list empty -->
+      <ng-template #randomUsersEmpty>
+        <div class="randomUser-list-empty row my-5 py-5">
+          <p><i class="fa fa-users"></i> Random Users Empty</p>
+        </div>
+      </ng-template>
     </div>
   </section>
 </main>

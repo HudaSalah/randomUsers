@@ -65,4 +65,17 @@
       }
     }
   }
+
+  .randomUser-list-empty {
+    p {
+      margin: 0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #52b2ad4f;
+      text-align: center;
+      @media #{$information-MobileLarge} {
+        font-size: 15px;
+      }
+    }
+  }
 }
