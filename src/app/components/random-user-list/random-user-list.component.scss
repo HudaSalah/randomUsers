@@ -1,20 +1,50 @@
 @import "src/styles.scss";
 
-#randomUser{
- .randomUser-filter{
-  span , label{
-  color: $color-blue;
-  }
-  label{
-    @media #{$information-tablet}{
-       min-width: 110px;
-       font-size: 14px;
+#randomUser {
+  .randomUser-filter {
+    span,
+    label {
+      color: $color-blue;
+    }
+    label {
+      @media #{$information-tablet} {
+        min-width: 110px;
+        font-size: 14px;
+      }
+    }
+    span {
+      @media #{$information-MobileLarge} {
+        display: none;
+      }
     }
   }
-  span{
-    @media #{$information-MobileLarge}{
-      display: none;
+
+  .randomUser-list-container {
+    .randomUser-card {
+      border: 2px solid $color-green;
+      border-radius: 20px;
+      padding: 20px;
+      margin: 10px;
+      position: relative;
+      min-height: 235px;
+
+      .randomUser-img {
+        width: 130px;
+        height: 130px;
+        border: 2px solid $color-green;
+        border-radius: 50%;
+        overflow: hidden;
+        position: absolute;
+        top: -25%;
+        background-size: cover;
+        background-position: center;
+      }
+      .randomUser-information {
+        margin-top: 20%;
+        label{
+          font-size: 12px;
+        }
+      }
     }
   }
-}
 }

@@ -8,15 +8,15 @@ import { Component, OnInit } from '@angular/core';
 export class RandomUserListComponent implements OnInit {
   genderData = [
     {
-      id: '0',
+      id: 'male',
       name: 'male',
     },
     {
-      id: '1',
+      id: 'female',
       name: 'female',
     },
   ];
-  selectedGender: any;
+  selectedGender;
   nationalities = [
     'AU',
     'BR',
@@ -36,16 +36,24 @@ export class RandomUserListComponent implements OnInit {
     'US',
   ];
   nationalityData: Array<object> = [];
-  selectedNat: any;
+  selectedNat: string[];
 
   constructor() {
     this.nationalities.forEach((nat, index) => {
       this.nationalityData.push({
-        id: index,
+        id: nat,
         name: nat,
       });
     });
   }
 
+  onNationalityChange(event){
+    console.log(event)
+    console.log(this.selectedNat)
+  }
+  onGenderChange(event){
+    console.log(event)
+    console.log(this.selectedGender)
+  }
   ngOnInit(): void {}
 }
