@@ -21,11 +21,11 @@ export class ApiService {
   // }
 
   get(path: string, params?: HttpParams) : Observable<object> {
-    return this.http.get(`${this.apiUrl}/${path}`);
+    return this.http.get(`${this.apiUrl}${path}`);
   }
 
   downloadFile(path: string): Observable<any>{
-		return this.http.get(`${this.apiUrl}/${path}`, {responseType: 'blob'});
+		return this.http.get(`${this.apiUrl}${path}`, {responseType: 'blob'});
    }
 
   redirectToNotFound() {

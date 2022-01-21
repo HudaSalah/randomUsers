@@ -26,7 +26,7 @@
                 [placeholder]="'select gender'"
                 [allowClear]="true"
                 [(ngModel)]="selectedGender"
-                (change)="onGenderChange($event)"
+                (change)="getRandomUsersList()"
               >
               </ng-select>
             </div>
@@ -43,7 +43,7 @@
                 [placeholder]="'select nationality'"
                 [allowClear]="true"
                 [(ngModel)]="selectedNat"
-                (change)="onNationalityChange($event)"
+                (change)="getRandomUsersList()"
               >
               </ng-select>
             </div>

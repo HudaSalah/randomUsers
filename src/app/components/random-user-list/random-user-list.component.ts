@@ -3,7 +3,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { RandomUsers } from 'src/app/models/random-users';
 import { RandomUser } from 'src/app/models/random-user';
 import { DOCUMENT } from '@angular/common';
-import { HttpParams } from '@angular/common/http';
+import { Router, UrlSerializer } from '@angular/router';
 @Component({
   selector: 'app-random-user-list',
   templateUrl: './random-user-list.component.html',
@@ -40,9 +40,14 @@ export class RandomUserListComponent implements OnInit {
     'US',
   ];
   nationalityData: Array<object> = [];
-  selectedNat: string[];
+  selectedNat: string[] = [];
   randomUsersList: RandomUser[] = [];
-  constructor(private ApiService: ApiService,@Inject(DOCUMENT) private document: Document) {
+  constructor(
+    private ApiService: ApiService,
+    @Inject(DOCUMENT) private document: Document,
+    private router: Router,
+    private serializer: UrlSerializer
+  ) {
     this.nationalities.forEach((nat, index) => {
       this.nationalityData.push({
         id: nat,
@@ -61,9 +66,27 @@ export class RandomUserListComponent implements OnInit {
     this.document.body.removeChild(a);
   }
 
-  exportFile(type){
-    this.ApiService.downloadFile(`?results=9&format=${type}`
-    ).subscribe(
+  createParams(type?) {
+    // get defined params (if param != undefined)
+    let selectedNationality: string;
+    if (this.selectedNat != undefined && this.selectedNat.length > 0) {
+      selectedNationality = this.selectedNat.toString();
+    }
+    const tree = this.router.createUrlTree([], {
+      queryParams: {
+        results: '9',
+        gender: this.selectedGender,
+        nat: selectedNationality,
+        format: type,
+      },
+    });
+    let params = this.serializer.serialize(tree);
+    return params;
+  }
+
+  exportFile(type) {
+    let params = this.createParams(type);
+    this.ApiService.downloadFile(params).subscribe(
       (res) => {
         this.createDownloadLink(res);
       },
@@ -73,19 +96,9 @@ export class RandomUserListComponent implements OnInit {
     );
   }
 
-  onNationalityChange(event) {
-    console.log(event);
-    console.log(this.selectedNat);
-  }
-  onGenderChange(event) {
-    console.log(event);
-    console.log(this.selectedGender);
-  }
-
-  getRandomUsersList(gender?, nationality?) {
-    this.ApiService.get(
-      `?results=9&gender=${gender}&nat=${nationality}`
-    ).subscribe(
+  getRandomUsersList() {
+    let params = this.createParams();
+    this.ApiService.get(params).subscribe(
       (res) => {
         console.log(res);
         let result = res as RandomUsers;
