@@ -36,3 +36,14 @@ Run `docker build -t dockerized-angular-app .` With the -t argument, we define t
 Run `docker run  -p 8080:80 dockerized-angular-app` With -p we define a port mapping. Basically, we define that the port 80 of our container should be exposed to the port 8080 of our host machine. In this case “angular-container”. The last argument is the name of the image (“angular”) we want to use.
 
 Navigate to `http://localhost:8080/`. The app will automatically reload if you change any of the source files.
+
+
+
+## Points coverd :
+1- Showing list of random users
+2- Possible to filter random users list with gander and nationality
+3- Possible to export random users list with CSV or XML
+4- Able infinity scrolling 
+5- Possible to add or remove coulmns 
+6- Only request the fields that realy needed based on columns selected
+7- DockerFile with necessary condigrations to serve angular app 
