@@ -1,0 +1,158 @@
+<main>
+  <section id="randomUser">
+    <div class="container">
+      <!-- exports buttons  -->
+      <div class="d-flex justify-content-end my-3">
+        <button
+          type="button"
+          class="btn btn-blue p-3 m-2"
+          (click)="exportFile('CSV')"
+        >
+          Export CSV <i class="fa fa-file"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-blue p-3 m-2"
+          (click)="exportFile('XML')"
+        >
+          Export XML <i class="fa fa-file"></i>
+        </button>
+      </div>
+
+      <!-- random users list container  -->
+      <div class="randomUser-filter my-5">
+        <div class="col-12 d-flex align-items-center my-2">
+          <span class="mx-2"><i class="fa fa-columns"></i></span>
+          <label class="px-3" title="Add/Remove columns">Columns:</label>
+          <ng-select
+            class="form-control w-100 p-0 border-0 h-auto"
+            [items]="columnsData"
+            bindLabel="name"
+            bindValue="id"
+            [multiple]="true"
+            [placeholder]="'Select Columns'"
+            [allowClear]="true"
+            [(ngModel)]="selectedColumns"
+            (change)="getRandomUsersList()"
+          >
+          </ng-select>
+        </div>
+        <div class="col-12 d-flex align-items-center">
+          <span class="mx-2"><i class="fa fa-filter"></i></span>
+          <div class="row col-lg-10 col-12">
+            <div class="col-12 col-md-4 d-flex align-items-center my-2">
+              <label class="px-3" title="filter with gender">Gender:</label>
+              <ng-select
+                class="form-control w-100 p-0 border-0 h-auto"
+                [items]="genderData"
+                bindLabel="name"
+                bindValue="id"
+                [placeholder]="'select gender'"
+                [allowClear]="true"
+                [(ngModel)]="selectedGender"
+                (change)="getRandomUsersList()"
+              >
+              </ng-select>
+            </div>
+
+            <div class="col-12 col-md-6 d-flex align-items-center my-2">
+              <label class="px-3" title="filter with nationality">Nationality:</label>
+              <ng-select
+                class="form-control w-100 p-0 border-0 h-auto"
+                [items]="nationalityData"
+                bindLabel="name"
+                bindValue="id"
+                [multiple]="true"
+                maxSelectedItems="3"
+                [placeholder]="'select nationality'"
+                [allowClear]="true"
+                [(ngModel)]="selectedNat"
+                (change)="getRandomUsersList()"
+              >
+              </ng-select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- show random users list if exist -->
+      <div
+        class="randomUser-list-container row col-12 my-5 py-5"
+        *ngIf="randomUsersList.length > 0; else randomUsersEmpty"
+        infinite-scroll
+        (scrolled)="onScrollDown($event)"
+      >
+        <div
+          *ngFor="let user of randomUsersList; let even = even"
+          class="col-12 col-md-6 col-lg-4 mt-3 mb-5"
+        >
+          <div
+            class="randomUser-card d-flex justify-content-center"
+            [ngStyle]="{ 'border-color': even ? '#ea604d' : ' #1db57b' }"
+          >
+            <div
+              class="randomUser-img"
+              style="background-image: url({{ user.picture.large }});"
+              [ngStyle]="{ 'border-color': even ? '#ea604d' : ' #1db57b' }"
+            ></div>
+            <div class="randomUser-information row col-12">
+              <div *ngIf="user.name" class="d-flex col-12 col-md-6">
+                <label><i class="fa fa-user"></i></label>
+                <label>{{ user.name.first }} {{ user.name.last }}</label>
+              </div>
+
+              <div *ngIf="user.email" class="d-flex col-12 col-md-6">
+                <label><i class="fa fa-envelope"></i></label>
+                <label title="{{ user.email }}">{{ user.email }}</label>
+              </div>
+
+              <div *ngIf="user.gender" class="d-flex col-12 col-md-6">
+                <label><i class="fa fa-venus-mars"></i></label>
+                <label>{{ user.gender }}</label>
+              </div>
+
+              <div *ngIf="user.phone" class="d-flex col-12 col-md-6">
+                <label><i class="fa fa-phone"></i></label>
+                <label>{{ user.phone }}</label>
+              </div>
+
+              <div *ngIf="user.nat" class="d-flex col-12 col-md-6">
+                <label><i class="fa fa-globe"></i></label>
+                <label>{{ user.nat }}</label>
+              </div>
+
+              <div *ngIf="user.location" class="d-flex col-12 col-md-6">
+                <label><i class="fa fa-map-marker"></i></label>
+                <label
+                  title="{{ user.location.country }} / {{ user.location.city }}"
+                  >{{ user.location.country }} / {{ user.location.city }}</label
+                >
+              </div>
+
+              <div *ngIf="user.dob" class="d-flex col-12 col-md-6">
+                <label><i class="fa fa-calendar"></i></label>
+                <label title="current age">{{ user.dob.age }}</label>
+              </div>
+
+              <div *ngIf="user.registered" class="d-flex col-12 col-md-6">
+                <label><i class="fa fa-calendar"></i></label>
+                <label title="registered seniority">{{
+                  user.registered.age
+                }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- show msg if random users list empty -->
+      <ng-template #randomUsersEmpty>
+        <div class="randomUser-list-empty row my-5 py-5">
+          <p><i class="fa fa-users"></i> Random Users Empty</p>
+        </div>
+      </ng-template>
+    </div>
+  </section>
+</main>
+
+<app-loader *ngIf="isloading"></app-loader>
