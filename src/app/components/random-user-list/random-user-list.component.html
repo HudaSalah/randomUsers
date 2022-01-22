@@ -3,21 +3,45 @@
     <div class="container">
       <!-- exports buttons  -->
       <div class="d-flex justify-content-end my-3">
-        <button type="button" class="btn btn-blue p-3 m-2" (click)="exportFile('CSV')">
+        <button
+          type="button"
+          class="btn btn-blue p-3 m-2"
+          (click)="exportFile('CSV')"
+        >
           Export CSV <i class="fa fa-file"></i>
         </button>
-        <button type="button" class="btn btn-blue p-3 m-2" (click)="exportFile('XML')">
+        <button
+          type="button"
+          class="btn btn-blue p-3 m-2"
+          (click)="exportFile('XML')"
+        >
           Export XML <i class="fa fa-file"></i>
         </button>
       </div>
 
       <!-- random users list container  -->
       <div class="randomUser-filter my-5">
+        <div class="col-12 d-flex align-items-center my-2">
+          <span class="mx-2"><i class="fa fa-columns"></i></span>
+          <label class="px-3" title="Add/Remove columns">Columns:</label>
+          <ng-select
+            class="form-control w-100 p-0 border-0 h-auto"
+            [items]="columnsData"
+            bindLabel="name"
+            bindValue="id"
+            [multiple]="true"
+            [placeholder]="'Select Columns'"
+            [allowClear]="true"
+            [(ngModel)]="selectedColumns"
+            (change)="getRandomUsersList()"
+          >
+          </ng-select>
+        </div>
         <div class="col-12 d-flex align-items-center">
           <span class="mx-2"><i class="fa fa-filter"></i></span>
           <div class="row col-lg-10 col-12">
             <div class="col-12 col-md-4 d-flex align-items-center my-2">
-              <label class="px-3">Gender:</label>
+              <label class="px-3" title="filter with gender">Gender:</label>
               <ng-select
                 class="form-control w-100 p-0 border-0 h-auto"
                 [items]="genderData"
@@ -32,7 +56,7 @@
             </div>
 
             <div class="col-12 col-md-6 d-flex align-items-center my-2">
-              <label class="px-3">Nationality:</label>
+              <label class="px-3" title="filter with nationality">Nationality:</label>
               <ng-select
                 class="form-control w-100 p-0 border-0 h-auto"
                 [items]="nationalityData"
@@ -116,35 +140,6 @@
                   user.registered.age
                 }}</label>
               </div>
-
-              <!-- <div *ngFor="let item of user | keyvalue" class="col-12 col-md-6">
-                <div *ngIf="item.key == 'name'">
-                  <label
-                    >{{ item.key }}:{{ item.value.first }}
-                    {{ item.value.last }}</label
-                  >
-                </div>
-                <div *ngIf="item.key == 'email'">
-                  <label>{{ item.key }}:{{ item.value }}</label>
-                </div>
-                <div *ngIf="item.key == 'gender'">
-                  <label>{{ item.key }}:{{ item.value }}</label>
-                </div>
-                <div *ngIf="item.key == 'phone'">
-                  <label>{{ item.key }}:{{ item.value }}</label>
-                </div>
-                <div *ngIf="item.key == 'nat'">
-                  <label>nationality:{{ item.value }}</label>
-                </div>
-                <div *ngIf="item.key == 'location'">
-                  <label
-                    >{{ item.key }}:{{ item.value.country }}
-                    {{ item.value.city }}</label>
-                </div>
-                <div *ngIf="item.key == 'registered'">
-                  <label>{{ item.key }}:{{ item.value.age }}</label>
-                </div>
-              </div> -->
             </div>
           </div>
         </div>
@@ -159,6 +154,5 @@
     </div>
   </section>
 </main>
-
 
 <app-loader *ngIf="isloading"></app-loader>

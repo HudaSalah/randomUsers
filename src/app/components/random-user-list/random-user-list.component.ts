@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
+import { DataService } from 'src/app/services/data.service';
 import { RandomUsers } from 'src/app/models/random-users';
-import { RandomUser } from 'src/app/models/random-user';
+import { User } from 'src/app/models/user';
 import { DOCUMENT } from '@angular/common';
 import { Router, UrlSerializer } from '@angular/router';
 @Component({
@@ -10,51 +11,27 @@ import { Router, UrlSerializer } from '@angular/router';
   styleUrls: ['./random-user-list.component.scss'],
 })
 export class RandomUserListComponent implements OnInit {
-  isloading = true ;
-  genderData = [
-    {
-      id: 'male',
-      name: 'male',
-    },
-    {
-      id: 'female',
-      name: 'female',
-    },
-  ];
+  isloading = true;
+  genderData: Array<object> = [];
   selectedGender;
-  nationalities = [
-    'AU',
-    'BR',
-    'CA',
-    'CH',
-    'DE',
-    'DK',
-    'ES',
-    'FI',
-    'FR',
-    'GB',
-    'IE',
-    'IR',
-    'NL',
-    'NZ',
-    'TR',
-    'US',
-  ];
   nationalityData: Array<object> = [];
-  selectedNat: string[] = [];
-  randomUsersList: RandomUser[] = [];
+  selectedNat: Array<string> = [];
+  columnsData = [];
+  selectedColumns: Array<string> = [];
+
+  randomUsersList: User[] = [];
+
   constructor(
     private ApiService: ApiService,
+    private dataService: DataService,
     @Inject(DOCUMENT) private document: Document,
     private router: Router,
     private serializer: UrlSerializer
   ) {
-    this.nationalities.forEach((nat, index) => {
-      this.nationalityData.push({
-        id: nat,
-        name: nat,
-      });
-    });
+    this.genderData = dataService.getGender();
+    this.nationalityData = dataService.getNationalities();
+    this.columnsData = dataService.getColumns();
+    this.selectedColumns = dataService.getColumns().map((x) => x.id);
   }
 
   createDownloadLink(data: any) {
@@ -73,11 +50,15 @@ export class RandomUserListComponent implements OnInit {
     if (this.selectedNat != undefined && this.selectedNat.length > 0) {
       selectedNationality = this.selectedNat.toString();
     }
+    //by default user profile image should be displayed
+    const includes = [...this.selectedColumns, 'picture'].join(',');
+
     const tree = this.router.createUrlTree([], {
       queryParams: {
         results: '9',
         gender: this.selectedGender,
         nat: selectedNationality,
+        inc: includes,
         format: type,
       },
     });
@@ -101,28 +82,24 @@ export class RandomUserListComponent implements OnInit {
     let params = this.createParams();
     this.ApiService.get(params).subscribe(
       (res) => {
-        console.log(res);
         let result = res as RandomUsers;
-        if(append){
+        if (append) {
           //for infinity scrolling
-          let newRes  = result.results as RandomUser[];
-          this.randomUsersList.push(...newRes)
-        }else{
-         this.randomUsersList = result.results as RandomUser[];
+          let newRes = result.results as User[];
+          this.randomUsersList.push(...newRes);
+        } else {
+          this.randomUsersList = result.results as User[];
         }
-        console.log(this.randomUsersList);
         this.isloading = false;
       },
       (err) => {
-        // this.ApiService.redirectToNotFound();
+        console.log(err)
       }
     );
   }
 
-
   // infinity scrolling
   onScrollDown(ev: any) {
-    console.log("scrolled down!!", ev);
     this.getRandomUsersList(true);
   }
 

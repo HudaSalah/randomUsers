@@ -1,4 +1,4 @@
-export class RandomUser {
+export class User {
   name: {
     title: string;
     first: string;
@@ -33,16 +33,6 @@ export class RandomUser {
     thumbnail: string;
   };
 
-  cell: string;
-  login: {
-    uuid: string;
-    username: string;
-    password: string;
-    salt: string;
-    md5: string;
-    sha1: string;
-    sha256: string;
-  };
   dob: {
     date: string;
     age: number;
