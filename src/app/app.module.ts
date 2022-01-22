@@ -3,6 +3,7 @@ import { NgModule ,NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core
 import { HttpClientModule } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,7 +25,8 @@ import { LoaderComponent } from './components/loader/loader.component';
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    NgSelectModule
+    NgSelectModule,
+    InfiniteScrollModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

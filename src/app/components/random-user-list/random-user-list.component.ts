@@ -97,14 +97,19 @@ export class RandomUserListComponent implements OnInit {
     );
   }
 
-  getRandomUsersList() {
-    this.isloading = true ;
+  getRandomUsersList(append?) {
     let params = this.createParams();
     this.ApiService.get(params).subscribe(
       (res) => {
         console.log(res);
         let result = res as RandomUsers;
-        this.randomUsersList = result.results as RandomUser[];
+        if(append){
+          //for infinity scrolling
+          let newRes  = result.results as RandomUser[];
+          this.randomUsersList.push(...newRes)
+        }else{
+         this.randomUsersList = result.results as RandomUser[];
+        }
         console.log(this.randomUsersList);
         this.isloading = false;
       },
@@ -112,6 +117,13 @@ export class RandomUserListComponent implements OnInit {
         // this.ApiService.redirectToNotFound();
       }
     );
+  }
+
+
+  // infinity scrolling
+  onScrollDown(ev: any) {
+    console.log("scrolled down!!", ev);
+    this.getRandomUsersList(true);
   }
 
   ngOnInit(): void {

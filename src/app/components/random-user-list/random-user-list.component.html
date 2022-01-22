@@ -55,6 +55,8 @@
       <div
         class="randomUser-list-container row col-12 my-5 py-5"
         *ngIf="randomUsersList.length > 0; else randomUsersEmpty"
+        infinite-scroll
+        (scrolled)="onScrollDown($event)"
       >
         <div
           *ngFor="let user of randomUsersList; let even = even"
